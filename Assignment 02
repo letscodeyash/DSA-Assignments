@@ -1,0 +1,75 @@
+first_set = set((1,2,3,4))
+print("our set is :-",first_set)
+
+def search():
+    n=int(input("enter the number to search : "))
+    isPresent = first_set._contains_((n))
+    print(isPresent)                       
+    
+def update():
+    n=int(input("enter the number to insert : "))
+    first_set.update((n,))
+    print(first_set)
+    
+def remove():
+   n=int(input("enter the number to remove : "))
+   first_set.remove((n))
+   print(first_set)
+   
+def size():
+     print("size of the set is : ",len((first_set)))
+     
+def insertion():
+    first_set = {1, 2, 3, 4, 5, 6}
+    second_set = {4, 5, 6, 7, 8, 9}
+    print("s1 = ",first_set)
+    print("s2 = ",second_set)
+    print("insertion of the these two sets is  :",first_set & second_set)
+    
+def difference():
+    first_set = {1, 2, 3, 4, 5, 6}
+    second_set = {4, 5, 6, 7, 8, 9}
+    print("s1 = ",first_set)
+    print("s2 = ",second_set)
+    print("difference of the these two sets is  :",first_set ^ second_set)
+    
+def union():
+    first_set = {1, 2, 3, 4, 5, 6}
+    second_set = {4, 5, 6, 7, 8, 9}
+    print("s1 = ",first_set)
+    print("s2 = ",second_set)
+    z=first_set.union(second_set)
+    print("union of the these two sets is  :",z)
+    
+def main():
+    while(True):
+        print("*** MENU ****")
+        print("1. INSERT")
+        print("2. REMOVE")
+        print("3. SEARCH")
+        print("4. SIZE ")
+        print("5. INSERTION")
+        print("6. DIFFERENCE")
+        print("7. UNION")
+        print("0. EXIT")
+        print("**********")
+        ch=int(input("enter the choice :"))
+        if ch==1:
+            update()
+        elif ch==2:
+            remove()
+        elif ch==3:
+            search()
+        elif ch==4:
+            size()
+        elif ch==5:
+            insertion()
+        elif ch==6:
+            difference()
+        elif ch==7:
+            union()
+        elif ch==0:
+            print("&&&& THANK YOU $$$$$")
+            break
+            
+main()
