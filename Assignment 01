@@ -1,0 +1,79 @@
+import array as hashTable
+size=7
+hashTable = hashTable.array('i',[-1]*size)
+
+def initial():
+    for i in range(0,7):
+        print("Index[",i,"]=", hashTable[i])
+
+def insertHash(value): 
+    
+    key = value % size;
+    if(hashTable[key] == -1):
+        hashTable[key] = value;
+        print(value,"inserted at arr",key);
+    else:
+        print("Collision : arr",key,"has element",hashTable[key],"already!");
+        print("Unable to insert", value, "into hash table");
+        i=0;count=0;
+        while(i<size):
+            if(hashTable[i]!=-1):
+                count+=1;
+            i+=1;
+        if(count==size):#checking for the hash full
+            print("Hash Table Is Full Hence ",value," Can not Be Inserted");
+            print(hashTable);
+        else:  #logic of linear probiing
+            i=key;
+            for i in range(key, size):
+                key1=(i+1)%size;  
+                if(hashTable[key1] == -1): 
+                    hashTable[key1] = value;
+                    print(value,"inserted at arr",key1);
+                    break;
+def search(value): 
+    # key = value % size;
+    for i in hashTable:
+        if(i==value):
+            print(value, "Found at th Index location",i);
+        
+    print(value, "Not Found at th Index location");
+        
+def delHash(value): 
+    key = value % size;
+    if(hashTable[key]==value):
+        print(value, "Sussfully deleted from hash table");
+        hashTable[key]=-1;
+    else:
+        print(value, "Not Found at", key,"th Index location");     
+
+# for i in range(0,7):
+    # print("Index[",i,"]=", hashTable[i]) 
+    
+def main():
+
+    while True:
+        print()
+        print("\t-----Menu----")
+        print()
+        print("1. Add Telephone number\n2. Display Telephone directory\n3. Search Telephone number\n4. Delete Telephone number\n0. Exit\n")
+        
+        print()
+        ch = int(input("\nEnter your choice: "))
+        if ch == 1:
+            value=int(input("enter the value : "))
+            insertHash(value)
+        elif ch == 2:
+           initial()
+        elif ch == 3:
+            name = input("Enter the value you want to search: ")
+            search(value)
+        elif ch == 4:
+            value = int(input("Enter the value you want to delete: "))
+            delHash(value)
+        elif ch == 0:
+            print("\n---- Thank You  ^_^ ----")
+            break
+
+
+main()
