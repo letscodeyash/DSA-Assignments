@@ -1,90 +1,80 @@
-#include <bits/stdc++.h>
+#include<iostream>
+#include<stack>
 using namespace std;
 
-struct TreeNode {
+struct node{
     char data;
-    TreeNode* left;
-    TreeNode* right;
+    node* left;
+    node* right;
 };
 
-TreeNode* constructExpressionTree(string prefixExpression) {
-    stack<TreeNode*> stk;
-    
-    // Traverse the prefix expression in reverse order
-    for (int i = prefixExpression.length() - 1; i >= 0; i--) {
-        char ch = prefixExpression[i];
-        
-        // Create a new node for each character in the expression
-        TreeNode* newNode = new TreeNode;
-        newNode->data = ch;
-        newNode->left = newNode->right = NULL;
-        
-        // If the character is an operand, push it onto the stack
-        if (isalnum(ch)) {
-            stk.push(newNode);
+node* exptree(string prefix){
+    stack <node*> stk;
+    for(int i=prefix.length() -1; i>=0; i--)
+    {
+        char ch= prefix[i];
+        node* newnode = new node;
+        newnode->data = ch;
+        newnode->left = newnode->right = NULL;
+
+        if(isalnum(ch)){
+            stk.push(newnode);
         }
-        // If the character is an operator, pop two operands from the stack
-        // and assign them as the left and right children of the operator node
-        else {
-            newNode->left = stk.top();
+        else{
+            newnode->left = stk.top();
             stk.pop();
-            newNode->right = stk.top();
+            newnode->right = stk.top();
             stk.pop();
-            stk.push(newNode);
+            stk.push(newnode);
         }
     }
-    
-    // The top of the stack will be the root of the expression tree
     return stk.top();
 }
 
-void postOrderTraversal(TreeNode* root) {
-    if (root == NULL)
+void postorder(node* root){
+    if(root == NULL){
         return;
-    
-    stack<TreeNode*> stk;
-    TreeNode* current = root;
-    TreeNode* lastVisited = NULL;
-    
-    while (!stk.empty() || current != NULL) {
-        if (current != NULL) {
+    }
+    stack <node*> stk;
+    node* current = root;
+    node* lastvisited =  NULL;
+
+    while(!stk.empty() || current != NULL){
+        if(current != NULL){
             stk.push(current);
-            current = current->left;
+            current= current->left;
         }
-        else {
-            TreeNode* topNode = stk.top();
-            
-            // If the right child exists and has not been visited yet
-            if (topNode->right != NULL && topNode->right != lastVisited) {
-                current = topNode->right;
+        else{
+            node* topnode= stk.top();
+            if(topnode->right != NULL && topnode->right != lastvisited){
+                current = topnode->right;
             }
-            else {
-                // Process the node
-                cout << topNode->data << " ";
+            else{
+                cout<<topnode->data<<" ";
                 stk.pop();
-                lastVisited = topNode;
+                lastvisited = topnode;
             }
         }
     }
 }
 
-void deleteTree(TreeNode* root) {
-    if (root == NULL)
+void deletetree(node* root){
+    if(root == NULL)
+    {
         return;
-    
-    deleteTree(root->left);
-    deleteTree(root->right);
+    }
+    deletetree(root->left);
+    deletetree(root->right);
     delete root;
-}
+}  
 
-int main() {
-    string prefixExpression = "+--a*bc/def";
-    TreeNode* root = constructExpressionTree(prefixExpression);
-
-    cout << "Post-order traversal: ";
-    postOrderTraversal(root);
-    cout << endl;
-    deleteTree(root);
-
-    return 0;
+int main()
+{
+    string prefix = "+--a*bc/def";
+    node* root = exptree(prefix);
+    cout<<"postorder is : ";
+    postorder(root);
+    cout<<endl;
+    deletetree(root);
+    cout<<"tree deleted ";
 }
