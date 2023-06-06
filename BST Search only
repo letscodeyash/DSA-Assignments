@@ -1,0 +1,77 @@
+#include<iostream>
+using namespace std;
+
+struct node {
+    int data;
+    node* left;
+    node* right;
+    node(int data) {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+node* insert(node* &root, int x) {
+    if (root == NULL) {
+        root = new node(x);
+    }
+    else if (x >= root->data) {
+        root->right = insert(root->right, x);
+    }
+    else {
+        root->left = insert(root->left, x);
+    }
+    return root;
+}
+
+void traversal(node* root) {
+    if (root == NULL) {
+        return;
+    }
+    traversal(root->left);
+    cout << root->data << " ";
+    traversal(root->right);
+}
+
+void search(node* root, int key, bool &present) {
+    if (root == NULL) {
+        return;
+    }
+    if (root->data == key) {
+        present = true;
+    }
+    else if (root->data < key) {
+        search(root->right, key, present);
+    }
+    else {
+        search(root->left, key, present);
+    }
+}
+
+int main() {
+    node* root = NULL;
+    int n;
+    cout << "Enter the number of nodes to insert into the BST: ";
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        int element;
+        cout << "Enter the data value to be inserted in node " << i << ": ";
+        cin >> element;
+        insert(root, element);
+    }
+    cout << "Displaying the tree: ";
+    traversal(root);
+    cout << endl;
+    int key;
+    cout << "Enter the key to search for: ";
+    cin >> key;
+    bool present = false;
+    search(root, key, present);
+    if (present) {
+        cout << "Key is present." << endl;
+    }
+    else {
+        cout << "Key is not present." << endl;
+    }
+}
